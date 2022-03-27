@@ -37,7 +37,7 @@ class AutoShardedClient(Client):
         #     Controls whether synchronization in the user-facing API should be automatic or not.
 
         self._loop = asyncio.get_event_loop()
-        self._http = interactions.api.http.client.HTTPClient(token=token)
+        self._http = interactions.api.http.HTTPClient(token=token)
         self._intents = kwargs.get("intents", Intents.DEFAULT)
         self._websocket = WebSocketClient(token=token, intents=self._intents)
         self._shard = kwargs.get("shards")
