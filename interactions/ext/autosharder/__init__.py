@@ -2,11 +2,14 @@ from interactions import Client
 from interactions.api.models.team import Application
 import interactions
 from interactions.api.gateway import WebSocketClient
+from contextlib import suppress
 from interactions.api.models.flags import Intents
 import asyncio
 from interactions.base import get_logger
 
 log = get_logger("client")
+
+
 class AutoShardedClient(Client):
     def __init__(
         self,
@@ -59,6 +62,7 @@ class AutoShardedClient(Client):
 
         data = self._loop.run_until_complete(self._http.get_current_bot_information())
         self.me = Application(**data)
+
     def _shard_list_generator(self, shard_count):
         """A helper method to generate shards."""
         for x in range(0, shard_count):
@@ -68,7 +72,11 @@ class AutoShardedClient(Client):
         if self._shard is None:
             bot_gw = await self._http.get_bot_gateway()
             self._shard = bot_gw[0]
-            print(self._shard)
-        while not self._websocket._closed:
-            loops = [await self._websocket._establish_connection(x, self._presence) for x in self._shard_list_generator(self._shard)]
-            await asyncio.gather(*loops, loop=asyncio.get_event_loop())
+            # print(self._shard)
+        with suppress(KeyboardInterrupt):
+            while not self._websocket._closed:
+                loops = [
+                    await self._websocket._establish_connection(x, self._presence)
+                    for x in self._shard_list_generator(self._shard)
+                ]
+                await asyncio.gather(*loops, loop=asyncio.get_event_loop())
