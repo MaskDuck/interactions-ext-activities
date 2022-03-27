@@ -9,8 +9,8 @@ class AutoShardedClient(Client):
         return shard_list
 
     async def _login(self):
-        if self.shards is []:
-            self.shards = await self._http.get_gateway_bot()[0]
+        if self._shard is []:
+            self._shard = await self._http.get_gateway_bot()[0]
         while not self._websocket._closed:
-            loops = [await self._websocket._establish_connection(x, self._presence) for x in self._shard_list_generator(self.shards)]
+            loops = [await self._websocket._establish_connection(x, self._presence) for x in self._shard_list_generator(self._shard)]
             await asyncio.gather(*loops, loop=asyncio.get_event_loop())
