@@ -46,8 +46,8 @@ class AutoShardedClient(Client):
         self._shard = kwargs.get("shards")
         self._presence = kwargs.get("presence")
         self._token = token
-        self._extensions = {}
-        self._scopes = set([])
+        self._extensions = {}  # type: ignore
+        self._scopes = set([])  # type: ignore
         self.me = None
         _token = self._token  # noqa: F841
         _cache = self._http.cache  # noqa: F841
