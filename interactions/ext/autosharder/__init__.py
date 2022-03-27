@@ -17,11 +17,7 @@ class AutoShardedClient(Client):
         **kwargs,
     ) -> None:
         r"""
-        Establishes a client connection to the Web API and Gateway.
-        :param token: The token of the application for authentication and connection.
-        :type token: str
-        :param \**kwargs: Multiple key-word arguments able to be passed through.
-        :type \**kwargs: dict
+        This is interactions.py's init but modified a bit for sharding purpose.
         """
 
         # Arguments
