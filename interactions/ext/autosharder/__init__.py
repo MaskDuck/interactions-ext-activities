@@ -66,7 +66,8 @@ class AutoShardedClient(Client):
 
     async def _login(self):
         if self._shard is None:
-            self._shard = await self._http.get_bot_gateway()[0]
+            bot_gw = await self._http.get_bot_gateway()
+            self._shard = bot_gw[0]
             print(self._shard)
         while not self._websocket._closed:
             loops = [await self._websocket._establish_connection(x, self._presence) for x in self._shard_list_generator(self._shard)]
