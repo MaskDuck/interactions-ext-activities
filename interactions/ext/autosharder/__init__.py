@@ -2,7 +2,7 @@ from interactions import Client
 import asyncio
 
 class AutoShardedClient(Client):
-    async def _shard_list_generator(self, shard_count):
+    def _shard_list_generator(self, shard_count):
         """A helper method to generate shards."""
         if shard_count is not []:
             shard_list = [[a, shard_count] for a in range(0, shard_count)]
