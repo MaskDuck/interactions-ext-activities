@@ -61,12 +61,11 @@ class AutoShardedClient(Client):
         self.me = Application(**data)
     def _shard_list_generator(self, shard_count):
         """A helper method to generate shards."""
-        if shard_count is not None:
-            shard_list = [[a, shard_count] for a in range(0, shard_count)]
-        return shard_list
+        for x in range(0, shard_count):
+            yield [x, shard_count]
 
     async def _login(self):
-        if self._shard is []:
+        if self._shard is None:
             self._shard = await self._http.get_gateway_bot()[0]
             print(self._shard)
         while not self._websocket._closed:
