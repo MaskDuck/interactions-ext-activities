@@ -11,6 +11,7 @@ log = get_logger("client")
 
 
 class AutoShardedClient(Client):
+    """A sharded implementation. This just exist to override the _login coroutine to create multiple websocket instance."""
     def __init__(
         self,
         token: str,
