@@ -1,13 +1,16 @@
-from interactions import Client, Guild
+from interactions import Client
+import asyncio
 
 class AutoShardedClient(Client):
-    def _shard_list_generator(self):
+    async def _shard_list_generator(self, shard_count):
         """A helper method to generate shards."""
-        if self.shard is not []:
-            self._shard_list = [[a, self.shard] for a in range(1, self.shard)]
-    
-    async def _login(self) -> None:
-        """Makes a login with the Discord API."""
+        if shard_count is not []:
+            shard_list = [[a, shard_count] for a in range(0, shard_count)]
+        return shard_list
+
+    async def _login(self):
+        if self.shards is []:
+            self.shards = await self._http.get_gateway_bot()[0]
         while not self._websocket._closed:
-            for x in self._shard_list:
-                await self._websocket._establish_connection(x, self._presence)
+            loops = [await self._websocket._establish_connection(x, self._presence) for x in self._shard_list_generator(self.shards)]
+            await asyncio.gather(*loops, loop=asyncio.get_event_loop())
