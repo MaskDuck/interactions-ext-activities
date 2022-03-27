@@ -20,21 +20,6 @@ class AutoShardedClient(Client):
         This is interactions.py's init but modified a bit for sharding purpose.
         """
 
-        # Arguments
-        # ~~~~~~~~~
-        # token : str
-        #     The token of the application for authentication and connection.
-        # intents? : Optional[Intents]
-        #     Allows specific control of permissions the application has when connected.
-        #     In order to use multiple intents, the | operator is recommended.
-        #     Defaults to ``Intents.DEFAULT``.
-        # shards? : Optional[List[Tuple[int]]]
-        #     Dictates and controls the shards that the application connects under.
-        # presence? : Optional[ClientPresence]
-        #     Sets an RPC-like presence on the application when connected to the Gateway.
-        # disable_sync? : Optional[bool]
-        #     Controls whether synchronization in the user-facing API should be automatic or not.
-
         self._loop = asyncio.get_event_loop()
         self._http = interactions.api.http.HTTPClient(token=token)
         self._intents = kwargs.get("intents", Intents.DEFAULT)
