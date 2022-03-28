@@ -1,3 +1,5 @@
+# Warning: This script is in beta and may have bugs. Use at your own risk.
+
 # interactions-ext-autosharder
 Sharding is a problem that the official library doesn't support.
 
@@ -27,4 +29,4 @@ Note: I would recommend you to omit the `shards` kwarg. If you omit the `shards`
 `pip install git+https://github.com/MaskDuck/interactions-ext-autosharder`
 
 
-# Warning: This script is in beta and may have bugs. Use at your own risk.
+
